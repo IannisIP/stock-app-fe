@@ -5,13 +5,21 @@ interface Props {
   onPortfolioRemove: (symbol: string) => void;
 }
 
-const CardPortfolio = (props: Props) => {
+const CardPortfolio: React.FC<Props> = ({
+  portfolioValue,
+  onPortfolioRemove,
+}: Props): JSX.Element => {
   return (
     <>
-      <h4>{props.portfolioValue}</h4>
-      <button onClick={(e) => props.onPortfolioRemove(props.portfolioValue)}>
-        Remove
-      </button>
+      <div className="flex flex-col w-full p-8 space-y-4 text-center rounded-lg shadow-lg md:w-1/3">
+        <p className="pt-6 text-xl font-bold">{portfolioValue}</p>
+        <button
+          className="block w-full py-3 text-white duration-200 border-2 rounded-lg bg-red-500 hover:text-red-500 hover:bg-white border-red-500"
+          onClick={(e) => onPortfolioRemove(portfolioValue)}
+        >
+          Remove
+        </button>
+      </div>
     </>
   );
 };

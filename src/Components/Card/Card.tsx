@@ -8,20 +8,22 @@ interface Props {
   onPortfolioCreate: (e: SyntheticEvent) => void;
 }
 
-const Card: React.FC<Props> = (props: Props): JSX.Element => {
+const Card: React.FC<Props> = ({
+  searchResult,
+  onPortfolioCreate,
+}: Props): JSX.Element => {
   return (
-    <div className="card">
-      <div>Image</div>
-      <div>
-        <h2>
-          {props.searchResult.name} ({props.searchResult.symbol})
-        </h2>
-        <p>${props.searchResult.currency}</p>
-      </div>
-      <p className="info">{props.searchResult.stockExchange}</p>
+    <div className="flex flex-col items-center justify-between w-full p-6 bg-slate-100 rounded-lg md:flex-row">
+      <h2 className="font-bold text-center text-veryDarkViolet md:text-left">
+        {searchResult.name} ({searchResult.symbol})
+      </h2>
+      <p className="text-veryDarkBlue">{searchResult.currency}</p>
+      <p className="font-bold text-veryDarkBlue">
+        {searchResult.exchangeShortName} - {searchResult.stockExchange}
+      </p>
       <AddPortfolio
-        onPortfolioCreate={props.onPortfolioCreate}
-        symbol={props.searchResult.symbol}
+        onPortfolioCreate={onPortfolioCreate}
+        symbol={searchResult.symbol}
       />
     </div>
   );
