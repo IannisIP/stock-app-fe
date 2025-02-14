@@ -32,6 +32,13 @@ function App() {
     setPortfolioValues(updatedPortfolio);
   };
 
+  const onPortfolioRemove = (symbol: string) => {
+    const updatedPortfolio = portfolioValues.filter(
+      (value) => value !== symbol
+    );
+    setPortfolioValues(updatedPortfolio);
+  };
+
   return (
     <div className="App">
       <Search
@@ -39,7 +46,10 @@ function App() {
         handleSearchChange={handleSearchChange}
         onSearchSubmit={onSearchSubmit}
       />
-      <ListPortfolio portfolioValues={portfolioValues} />
+      <ListPortfolio
+        portfolioValues={portfolioValues}
+        onPortfolioRemove={onPortfolioRemove}
+      />
       {serverError && <div>{serverError}</div>}
       <CardList
         searchResult={searchReasult}
