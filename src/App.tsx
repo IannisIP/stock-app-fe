@@ -1,64 +1,13 @@
-import { SyntheticEvent, useState } from "react";
-import { searchCompanies } from "./api";
+import { Outlet } from "react-router";
 import "./App.css";
-import CardList from "./Components/CardList/CardList";
-import Search from "./Components/Search/Search";
-import { CompanySearch } from "./company";
-import ListPortfolio from "./Components/Portfolio/ListPortfolio/ListPortfolio";
 import Navbar from "./Components/Navbar/Navbar";
-import Hero from "./Components/Hero/Hero";
 
 function App() {
-  const [search, setSearch] = useState<string>("");
-  const [searchReasult, setSearchResult] = useState<CompanySearch[]>([]);
-  const [portfolioValues, setPortfolioValues] = useState<string[]>([]);
-  const [serverError, setServerError] = useState<string>("");
-
-  const handleSearchChange = (value: string) => {
-    setSearch(value);
-  };
-
-  const onSearchSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    const result = await searchCompanies(search);
-    if (typeof result === "string") {
-      setServerError(result);
-    } else if (Array.isArray(result.data)) {
-      setSearchResult(result.data);
-    }
-  };
-
-  const onPortfolioCreate = (e: any) => {
-    e.preventDefault();
-    const updatedPortfolio = [...portfolioValues, e.target[0].value];
-    setPortfolioValues(updatedPortfolio);
-  };
-
-  const onPortfolioRemove = (symbol: string) => {
-    const updatedPortfolio = portfolioValues.filter(
-      (value) => value !== symbol
-    );
-    setPortfolioValues(updatedPortfolio);
-  };
-
   return (
-    <div className="App">
+    <>
       <Navbar />
-      <Search
-        search={search}
-        handleSearchChange={handleSearchChange}
-        onSearchSubmit={onSearchSubmit}
-      />
-      <ListPortfolio
-        portfolioValues={portfolioValues}
-        onPortfolioRemove={onPortfolioRemove}
-      />
-      {serverError && <div>{serverError}</div>}
-      <CardList
-        searchResult={searchReasult}
-        onPortfolioCreate={onPortfolioCreate}
-      />
-    </div>
+      <Outlet />
+    </>
   );
 }
 
